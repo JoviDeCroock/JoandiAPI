@@ -7,7 +7,7 @@ var salt = bcrypt.genSaltSync(10);
 
 var UserSchema = new mongoose.Schema(
     {
-        email: String,
+        username: {type:String, unique: true},
         password: String,
         admin: Boolean,
         cart: {type: mongoose.Schema.Types.ObjectId, ref:'Cart'},
@@ -41,4 +41,4 @@ UserSchema.methods.comparePassword = function(password,cb){
     });
 };
 
-mongoose.model('User', UserSchema)
+mongoose.model('User', UserSchema);

@@ -8,14 +8,19 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 require('./models/Users');
+require('./models/Cart');
+require('./models/Products');
+require('./models/Categories');
 require('./config/passport');
 var config = require('./config/config');
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database);
 
-var auth = require('./routes/auth');
 
+var auth = require('./routes/auth');
+//file requiren die de eerste admin user aanmaakt
 var app = express();
+require('./config/firstAdmin');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
