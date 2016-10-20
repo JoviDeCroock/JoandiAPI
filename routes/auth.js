@@ -9,28 +9,17 @@ var router = express.Router();
 
 var tokenGen = require('../config/tokenGenerator');
 
-//model import
+// Model import
 var Cart = mongoose.model('Cart');
 var User = mongoose.model('User');
 
-
-//Sanity test
+// Sanity test
 router.get('/', function(req,res,next)
 {
     return res.json({message: 'API works like a charm'});
 });
 
-//testmiddel
-router.get('/users',function(req,res,next)
-{
-   User.find(function(err,users)
-   {
-      if(err) {return next(err);}
-      return res.json(users);
-   });
-});
-
-//uiteindelijke API methods
+// Uiteindelijke API methods
 router.post('/register', function(req,res,next)
 {
    if(!req.body.password || !req.body.username){
@@ -42,7 +31,6 @@ router.post('/register', function(req,res,next)
    user.cart = new Cart();
    user.save(function(err){
       if(err){return next(err);}
-      //return res.json(user);
       return res.json({token: tokenGen(user)});
    });
 });
@@ -62,4 +50,5 @@ router.post('/login',function(req,res,next){
    })(req,res,next);
 });
 
+// Export zodat methodes kunnen gebruikt worden
 module.exports = router;

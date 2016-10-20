@@ -20,7 +20,7 @@ mongoose.connect(config.database);
 var auth = require('./routes/auth');
 //file requiren die de eerste admin user aanmaakt
 var app = express();
-require('./config/firstAdmin');
+require('./config/InitialDB');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
