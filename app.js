@@ -18,6 +18,7 @@ mongoose.connect(config.database);
 
 
 var auth = require('./routes/auth');
+var shop = require('./routes/shop');
 //file requiren die de eerste admin user aanmaakt
 var app = express();
 require('./config/InitialDB');
@@ -35,6 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', auth);
+app.use('/shop', shop);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
