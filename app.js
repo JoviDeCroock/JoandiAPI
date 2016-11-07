@@ -15,13 +15,13 @@ require('./config/passport');
 var config = require('./config/config');
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database);
-
+require('./config/InitialDB');
 
 var auth = require('./routes/auth');
 var shop = require('./routes/shop');
-//file requiren die de eerste admin user aanmaakt
 var app = express();
-require('./config/InitialDB');
+//file requiren die de eerste admin user aanmaakt
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

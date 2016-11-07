@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
+var config = require('../config/config');
+
 
 var tokenGen = require('../config/tokenGenerator');
 
@@ -28,10 +30,25 @@ router.post('/register', function(req,res,next)
    var user = new User();
    user.password = req.body.password;
    user.username = req.body.username;
-   user.cart = new Cart();
+   var cart = new Cart();
+   cart.products = [];
+   cart.save(function(err)
+   {
+      if(err){return next(err);}
+   });
+   user.cart = cart;
    user.save(function(err){
       if(err){return next(err);}
       return res.json({token: tokenGen(user)});
+   });
+});
+
+router.get('/users',function(req,res,next)
+{
+   User.find(function(err,users)
+   {
+      if(err) {return next(err);}
+      return res.json(users);
    });
 });
 

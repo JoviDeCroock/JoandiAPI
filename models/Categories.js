@@ -5,8 +5,7 @@ var mongoose = require('mongoose');
 
 var catSchema = new mongoose.Schema(
     {
-        name: String,
-        products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}]
+        name: String
     }
 );
 

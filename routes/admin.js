@@ -4,7 +4,7 @@
 // Dependencies express etc
 var mongoose = require('mongoose');
 var express = require('express');
-var passport = require('passport');
+var jwt = require('express-jwt');
 var router = express.Router();
 var config = require('../config/config');
 

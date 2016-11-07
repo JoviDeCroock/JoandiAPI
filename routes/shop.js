@@ -2,14 +2,13 @@
  * Created by jovi on 10/15/2016.
  */
 // Dependencies express etc
+// Dependencies express etc
 var mongoose = require('mongoose');
 var express = require('express');
-var passport = require('passport');
 var router = express.Router();
 var config = require('../config/config');
-
+var jwt = require('express-jwt');
 var auth = jwt({secret:config.secret,userProperty:config.userProperty});
-var tokenGen = require('../config/tokenGenerator');
 
 // model import
 var User = mongoose.model('User');
@@ -17,7 +16,7 @@ var Cart = mongoose.model('Cart');
 var Product = mongoose.model('Product');
 var Categorie = mongoose.model('Categorie');
 
-// Param Product
+// Params
 router.param('product', function(req,res,next,id)
 {
    var q = Product.findById(id);
@@ -30,18 +29,84 @@ router.param('product', function(req,res,next,id)
    });
 });
 
-
-// API methods
-router.get("/AllProducts", function(req, res, next)
+router.param('user', function(req,res,next,id)
 {
-    Product.find(function(err, products)
+    var q = User.findById(id);
+    q.exec(function(err, user)
     {
-        if(err) {return next(err);}
-        return res.json(products);
+        if(err){return next(err);}
+        if(!user) {return next(new Error('ongeldige user'));}
+        req.user = user;
+        return next();
     });
 });
 
-router.post("/AddToCart", auth,function(req, res, next)
+router.param('cart', function(req,res,next,id)
 {
-    Cart.find({user: req.payload._id}).products.push(req.product);
+    var q = Cart.findById(id);
+    q.exec(function(err, cart)
+    {
+        if(err){return next(err);}
+        if(!cart) {return next(new Error('ongeldige winkelkar'));}
+        req.cart = cart;
+        return next();
+    });
 });
+
+// API methods
+router.get("/getAllProducts", function(req, res, next)
+{
+    Product.find()
+        .populate('categories')
+        .exec(function(err, products)
+        {
+            if(err) {return next(err);}
+            return res.json(products);
+        });
+});
+
+router.get("/getCart/:cart", function(req,res,next)
+{
+   var c = req.cart;
+    c.populate('products', function(err, cart)
+    {
+        if(err) {return  next(err);}
+        Cart.populate(cart, {
+            path:'products.categories',
+            model:'Categorie'
+        },function(err, products)
+        {
+            if(err){return next(err);}
+            res.json(products);
+        });
+    });
+});
+
+router.post("/:user/addToCart/:product", auth,function(req, res, next)
+{
+    var p = req.product;
+    var q = Cart.findById(req.user.cart);
+    q.exec(function(err, cart)
+    {
+        if(err){return next(err);}
+        if(!cart) {return next(new Error('ongeldige cart'));}
+        cart.products.push(p);
+        cart.populate('products', function(err,cart)
+        {
+            cart.save(function(err){
+                if(err){return next(err);};
+            });
+            if(err) {return  next(err);}
+            Cart.populate(cart, {
+                path:'products.categories',
+                model:'Categorie'
+            },function(err, products)
+            {
+                if(err){return next(err);}
+                res.json(products);
+            });
+        });
+    });
+});
+
+module.exports = router;

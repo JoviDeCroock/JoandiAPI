@@ -7,8 +7,9 @@ var Cart = mongoose.model('Cart');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
 var Categorie = mongoose.model('Categorie');
+
 //eerst if checken of user nog niet bestaat
-if(!User.find({username:"admin@gmail.com"}))
+if(!Product.find())
 {
     //Admin aanmaken
     var user = new User();
