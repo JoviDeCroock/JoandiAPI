@@ -2,7 +2,6 @@
  * Created by jovi on 10/15/2016.
  */
 // Dependencies express etc
-// Dependencies express etc
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
