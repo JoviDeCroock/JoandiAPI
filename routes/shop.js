@@ -4,16 +4,17 @@
 // Dependencies express etc
 var mongoose = require('mongoose');
 var express = require('express');
+var jwt = require('express-jwt');
 var router = express.Router();
 var config = require('../config/config');
-var jwt = require('express-jwt');
-var auth = jwt({secret:config.secret,userProperty:config.userProperty});
 
 // model import
 var User = mongoose.model('User');
 var Cart = mongoose.model('Cart');
 var Product = mongoose.model('Product');
 var Categorie = mongoose.model('Categorie');
+
+var auth = jwt({secret:config.secret,userProperty:config.userProperty});
 
 // Params
 router.param('product', function(req,res,next,id)
@@ -64,7 +65,7 @@ router.get("/getAllProducts", function(req, res, next)
         });
 });
 
-router.get("/getCart/:cart", function(req,res,next)
+router.get("/getCart/:cart",function(req,res,next)
 {
    var c = req.cart;
     c.populate('products', function(err, cart)
@@ -81,7 +82,33 @@ router.get("/getCart/:cart", function(req,res,next)
     });
 });
 
-router.post("/:user/addToCart/:product", auth,function(req, res, next)
+router.get("/getUser/:user", function(req,res,next)
+{
+    var u = req.user;
+    u.populate('cart', function(err, cart)
+    {
+        if(err) {return  next(err);}
+        User.populate(cart,
+            {
+                path:'cart.products',
+                model:'Product'
+            },function(err, products)
+            {
+                if(err) {return  next(err);}
+                User.populate(products,
+                    {
+                        path:'cart.products.categories',
+                        model:'Categorie'
+                    },function(err,cat)
+                    {
+                        if(err) {return  next(err);}
+                        res.json(cat);
+                    })
+            });
+    });
+});
+
+router.post("/:user/addToCart/:product",function(req, res, next)
 {
     var p = req.product;
     var q = Cart.findById(req.user.cart);

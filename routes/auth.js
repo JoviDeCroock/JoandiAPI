@@ -6,8 +6,6 @@ var mongoose = require('mongoose');
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
-var config = require('../config/config');
-
 
 var tokenGen = require('../config/tokenGenerator');
 
