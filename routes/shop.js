@@ -82,6 +82,16 @@ router.get("/getCart/:cart",function(req,res,next)
     });
 });
 
+router.get("/getProduct/:product",function(req,res,next)
+{
+    var p = req.product;
+    p.populate('categories', function(err, product)
+    {
+        if(err) {return  next(err);}
+         res.json(product);
+    });
+});
+
 router.get("/getUser/:user", function(req,res,next)
 {
     var u = req.user;

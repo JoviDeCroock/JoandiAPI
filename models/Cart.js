@@ -5,7 +5,10 @@ var mongoose = require('mongoose');
 
 var CartSchema = new mongoose.Schema(
 {
-    products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}]
+    products: [{
+            amount: Number,
+            product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product'}
+        }]
 });
 
 mongoose.model('Cart', CartSchema);
