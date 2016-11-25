@@ -120,7 +120,9 @@ router.get("/getUser/:user", function(req,res,next)
 
 router.post("/:user/addToCart/:product",function(req, res, next)
 {
-    var p = req.product;
+    var p = {};
+    p.product = req.product;
+    p.amount = req.body.amount;
     var q = Cart.findById(req.user.cart);
     q.exec(function(err, cart)
     {
@@ -143,6 +145,11 @@ router.post("/:user/addToCart/:product",function(req, res, next)
             });
         });
     });
+});
+
+router.post("/:user/buy", function(req,res,next)
+{
+
 });
 
 module.exports = router;
