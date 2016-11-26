@@ -100,7 +100,7 @@ router.get("/getUser/:user", function(req,res,next)
         if(err) {return  next(err);}
         User.populate(cart,
             {
-                path:'cart.products',
+                path:'cart.products.product',
                 model:'Product'
             },function(err, products)
             {
@@ -112,7 +112,7 @@ router.get("/getUser/:user", function(req,res,next)
                     },function(err,cat)
                     {
                         if(err) {return  next(err);}
-                        res.json(cat);
+                        res.json(cat.cart);
                     })
             });
     });
@@ -122,7 +122,7 @@ router.post("/:user/addToCart/:product",function(req, res, next)
 {
     var p = {};
     p.product = req.product;
-    p.amount = req.body.amount;
+    p.amount = 1;
     var q = Cart.findById(req.user.cart);
     q.exec(function(err, cart)
     {

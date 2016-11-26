@@ -9,7 +9,7 @@ var productSchema = new mongoose.Schema(
         price: Number,
         description: String,
         image: String,
-        categories: {type: mongoose.Schema.Types.ObjectId, ref: 'Categorie'}
+        categorie: {type: mongoose.Schema.Types.ObjectId, ref: 'Categorie'}
     }
 );
 
