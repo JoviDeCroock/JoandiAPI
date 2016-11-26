@@ -46,7 +46,7 @@ User.find({}, function(err, ad)
         zeep.name = "stuk zeep";
         zeep.price = 5;
         zeep.description = "een goed ruikend stuk zeep";
-        zeep.categories = badartikelen;
+        zeep.categorie = badartikelen;
         zeep.image = "zeep.gif";
         zeep.save(function(err)
         {
@@ -56,7 +56,7 @@ User.find({}, function(err, ad)
         tafel.name = "Eikenhouten tafel";
         tafel.price = 110;
         tafel.description = "mooie tafel gemaakt van eikenhout";
-        tafel.categories = deco;
+        tafel.categories= deco;
         tafel.image = "tafel.jpg";
         tafel.save(function(err)
         {
@@ -66,7 +66,7 @@ User.find({}, function(err, ad)
         badjas.name = "Badjas";
         badjas.price = 50;
         badjas.description = "Bruine warme badjas";
-        badjas.categories = badartikelen;
+        badjas.categorie = badartikelen;
         badjas.image = "badjas.jpg";
         badjas.save(function(err)
         {
@@ -76,7 +76,7 @@ User.find({}, function(err, ad)
         kast.name="Eiken kast";
         kast.price=150;
         kast.description="Een praktische kast";
-        kast.categories=deco;
+        kast.categorie=deco;
         kast.image="kast.jpg";
         kast.save(function(err)
         {
