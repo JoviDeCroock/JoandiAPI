@@ -1,0 +1,22 @@
+<div class="container">
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li ng-show="vm.isLoggedIn"><a ng-click="vm.profile(vm.user)">Welkom, {{vm.currentUser}}</a></li>
+            <li><a href="/#/shop">Terug naar de winkel</a></li>
+            <li ng-hide="vm.isLoggedIn"><a href="/#/auth">Ik wil me Inloggen/Registreren</a></li>
+            <li ng-show="vm.isLoggedIn"><a ng-click="vm.logOut()">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Log uit
+            </a></li>
+        </ul>
+    </nav>
+    <div class="product">
+        <img src="http://localhost:3000/{{vm.product.image}}"/>
+        <div class="description">
+            <p>Naam: {{vm.product.name}}</p>
+            <p>Beschrijving: {{vm.product.description}}</p>
+            <p>Categorie: {{vm.product.categorie.name}}</p>
+            <p>Prijs: {{vm.product.price}} Euro</p>
+        </div>
+    </div>
+</div>

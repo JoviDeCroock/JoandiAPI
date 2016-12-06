@@ -1,0 +1,25 @@
+<div class="container">
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li ng-show="vm.isLoggedIn"><a ng-click="vm.profile(vm.user)">Welkom, {{vm.currentUser}}</a></li>
+            <li ng-hide="vm.isLoggedIn"><a href="/#/auth">Ik wil me Inloggen/Registreren</a></li>
+            <li ng-show="vm.isLoggedIn"><a ng-click="vm.logOut()">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Log uit
+            </a></li>
+        </ul>
+    </nav>
+    <div class="profile">
+        <h1>Uw winkelkarretje</h1>
+        <div class="tile" ng-repeat="item in  vm.current.products">
+            <img src="http://localhost:3000/{{item.product.image}}" alt="{{item.product.name}}"/>
+            <a href="#/product/{{item.product._id}}">
+                <p>Naam: {{item.product.name}}</p>
+                <p>Prijs: {{item.product.price}} Euro</p>
+            </a>
+            <img src="../../resources/images/cart.png" class="cart" ng-click="vm.addToCart(product._id)"/>
+        </div>
+        <h1>Uw aankopen</h1>
+        <div>todo</div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="authPage row">
+    <section class="login col-md-6">
+      <h3>Login</h3>
+      <form ng-submit="vm.logIn()">
+        <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Gebruikersnaam"
+                   ng-model="vm.loginUser.username"
+                   ng-required="true"/>
+        </div>
+        <div class="form-group">
+            <input type="password"
+                   class="form-control"
+                   placeholder="Wachtwoord"
+                   ng-model="vm.loginUser.password"
+                   ng-required="true"/>
+        </div>
+        <p ng-show="vm.error" class="error">
+          {{vm.error.message}}
+        </p>
+        <input type="submit" class="btn btn-primary" value="Log in"/>
+    </form>
+    </section>
+    <section class="register col-md-6">
+      <h3>Registreer</h3>
+      <form ng-submit="vm.register()">
+        <div class="form-group">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Gebruikersnaam"
+                   ng-model="vm.registerUser.username"
+                   ng-required="true"/>
+        </div>
+        <div class="form-group">
+            <input type="password"
+                   class="form-control"
+                   placeholder="Wachtwoord"
+                   ng-model="vm.registerUser.password"
+                   ng-required="true"/>
+        </div>
+        <div class="form-group">
+            <input type="password"
+                   class="form-control"
+                   placeholder = "Bevestig wachtwoord"
+                   ng-model="vm.registerUser.confirm"
+                   ng-required="true"/>
+        </div>
+        <p ng-show="vm.error" class="error">
+          {{vm.error.message}}
+        </p>
+        <input type="submit" class="btn btn-primary" value="Registreer"/>
+    </form>
+    </section>
+  </div>
+  <a href="/#/shop">Ik wil de winkel zien!</a>
+</div>

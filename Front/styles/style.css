@@ -1,0 +1,109 @@
+header img{
+  width : 200px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom: 10px;
+}
+.authPage {
+  border: 1px solid black;
+  padding: 20px 10px 20px 5px;
+}
+
+.register{
+  border-left: 1px solid grey;
+}
+
+li a{
+  cursor:pointer;
+}
+
+li:hover{
+  text-decoration: underline;
+}
+
+.tile{
+  text-align: center;
+  border: 3px solid #2C0B0B;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 8px;
+  width: calc(50% - 4px);
+  margin-right: 8px;
+  width:100%
+}
+
+.product{
+  width:100%;
+  margin: 0 auto;
+}
+
+.product img{
+  float:left;
+  display:inline-block;
+}
+
+.product div{
+  margin-left: 25px;
+  margin-top: 50px;
+  float:left;
+  display:inline-block;
+  font-size: 150%;
+}
+
+.tile a{
+  text-align: center;
+  color: #000;
+  display: block;
+  text-decoration: none;
+  width:100%;
+  margin: 0 auto;
+}
+
+header img{
+  display: block;
+}
+
+header{
+  margin-bottom: 25px;
+}
+
+.shop{
+  display: block;
+  margin: 0 auto;
+}
+
+.tile img{
+  width: 200px;
+  height: 200px;
+}
+.tile > .cart{
+  width:50px;
+  height:50px;
+}
+.tile > .cart:hover{
+  cursor: pointer;
+}
+
+.tile a:hover {
+  color:green;
+  cursor:pointer;
+}
+
+.tile:nth-of-type(2n) {
+  margin-right: 0;
+}
+
+
+@media screen and (min-width: 50em) {
+  .tile {
+    width: calc(25% - 6px);
+  }
+
+  .tile:nth-of-type(2n) {
+    margin-right: 8px;
+  }
+
+  .tile:nth-of-type(4n) {
+    margin-right: 0;
+  }
+}
