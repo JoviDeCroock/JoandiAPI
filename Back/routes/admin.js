@@ -7,9 +7,11 @@ var express = require('express');
 var jwt = require('express-jwt');
 var router = express.Router();
 var config = require('../config/config');
+var fs = require('fs');
+var multi = require('connect-multiparty');
 
 var auth = jwt({secret:config.secret,userProperty:config.userProperty});
-var tokenGen = require('../config/tokenGenerator');
+var mp = multi();
 
 // model import
 var User = mongoose.model('User');
@@ -49,7 +51,7 @@ router.get('/allCategories', function(req,res,next)
     });
 });
 
-router.post('/addProduct', function(req,res,next)
+router.post('/addProduct', mp, function(req,res,next)
 {
     if (!req.body.name || !req.body.description || !req.body.price || !req.body.image || !req.body.categorie)
     {
@@ -61,22 +63,29 @@ router.post('/addProduct', function(req,res,next)
     p.description = req.body.description;
     p.price = req.body.price;
     p.image = req.body.image;
-
+    fs.readFile(req.files.file.path, function(err,data)
+    {
+        var fPath = path.join(__dirname, '..', 'public', req.files.file.name);
+        console.log(fPath);
+        fs.writeFile(fPath, data, function(err)
+        {
+            return res.status(400).json({message: 'Upload failed'});
+        });
+    });
     Categorie.find({_id: req.body.categorie.id}, function(err, cat)
     {
         if(err){console.log(err);}
         p.categorie = cat;
     });
-
     p.save(function(err)
     {
         if(err){console.log(err);}
     });
-
     return res.json(p);
 });
 
-router.post('/addCategorie', function(req,res,next) {
+router.post('/addCategorie', function(req,res,next)
+{
     if (!req.body.name)
     {
         return res.status(400).json({message:'U heeft geen categorienaam ingevuld.'});
