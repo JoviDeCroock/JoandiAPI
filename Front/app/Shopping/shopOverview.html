@@ -11,8 +11,8 @@
     </nav>
     <div class="shop">
         <div class="tile" ng-repeat="product in  vm.products">
-            <img src="http://localhost:3000/{{product.image}}" alt="{{product.name}}"/>
             <a ng-click="vm.chooseProduct(product)">
+                <img src="http://localhost:3000/{{product.image}}" alt="{{product.name}}"/>
                 <p>Naam: {{product.name}}</p>
                 <p>Prijs: {{product.price}} Euro</p>
             </a>

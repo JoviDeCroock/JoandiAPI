@@ -2,6 +2,10 @@
     <nav class="navbar navbar-default">
         <ul class="nav navbar-nav">
             <li ng-show="vm.isLoggedIn"><a ng-click="vm.profile(vm.user)">Welkom, {{vm.currentUser}}</a></li>
+            <li><a href="/#/shop">Terug naar de winkel</a></li>
+            <li ng-show="vm.admin"><a ng-click="vm.adminPanel()">
+                Adminpaneel
+            </a></li>
             <li ng-hide="vm.isLoggedIn"><a href="/#/auth">Ik wil me Inloggen/Registreren</a></li>
             <li ng-show="vm.isLoggedIn"><a ng-click="vm.logOut()">
                 <span class="glyphicon glyphicon-log-out"></span>
@@ -12,14 +16,18 @@
     <div class="profile">
         <h1>Uw winkelkarretje</h1>
         <div class="tile" ng-repeat="item in  vm.current.products">
-            <img src="http://localhost:3000/{{item.product.image}}" alt="{{item.product.name}}"/>
             <a href="#/product/{{item.product._id}}">
-                <p>Naam: {{item.product.name}}</p>
-                <p>Prijs: {{item.product.price}} Euro</p>
+            <img src="http://localhost:3000/{{item.product.image}}" alt="{{item.product.name}}"/>
             </a>
-            <img src="../../resources/images/cart.png" class="cart" ng-click="vm.addToCart(product._id)"/>
+            <p>Naam: {{item.product.name}}</p>
+            <p>Prijs: {{item.product.price}} Euro</p>
+            <p>Hoeveelheid: {{item.amount}} stuks</p>
+            <form ng-submit="vm.updateAmount(item.product._id)">
+                Hoeveelheid:
+                <input type="text" name="Amount" ng-model="vm.amount"><br>
+                <p></p>
+                <input type="submit" class="btn btn-primary" value="Voeg hoeveelheid toe"/>
+            </form>
         </div>
-        <h1>Uw aankopen</h1>
-        <div>todo</div>
     </div>
 </div>

@@ -17,6 +17,7 @@ User.find({}, function(err, ad)
         var user = new User();
         user.password = "admin";
         user.username = "admin@gmail.com";
+        user.admin = true;
         var cart = new Cart();
         cart.save(function(err)
         {

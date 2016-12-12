@@ -17,6 +17,7 @@
         vm.isLoggedIn = authService.isLoggedIn();
         vm.currentUser = authService.currentUsername();
         vm.logOut = logOut;
+        vm.categories  = adminService.categories;
 
         function logOut () {
             authService.logOut();

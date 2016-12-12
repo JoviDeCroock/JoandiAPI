@@ -19,6 +19,7 @@ require('./config/InitialDB');
 
 var auth = require('./routes/auth');
 var shop = require('./routes/shop');
+var adminPanel = require('./routes/admin');
 var app = express();
 //file requiren die de eerste admin user aanmaakt
 
@@ -51,6 +52,7 @@ app.use(passport.initialize());
 
 app.use('/', auth);
 app.use('/shop', shop);
+app.use('/admin', adminPanel);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

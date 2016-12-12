@@ -20,6 +20,18 @@ var Product = mongoose.model('Product');
 var Categorie = mongoose.model('Categorie');
 
 // Param Product
+router.param('user', function(req,res,next,id)
+{
+    var q = User.findById(id);
+    q.exec(function(err, user)
+    {
+        if(err){return next(err);}
+        if(!user) {return next(new Error('ongeldige user'));}
+        req.user = user;
+        return next();
+    });
+});
+
 router.param('product', function(req,res,next,id)
 {
     var q = Product.findById(id);
@@ -82,6 +94,16 @@ router.post('/addProduct', mp, function(req,res,next)
         if(err){console.log(err);}
     });
     return res.json(p);
+});
+
+router.get("/:user/isAdmin", function(req,res,next)
+{
+   if(req.user.admin)
+   {
+       res.json({admin: true});
+   }else{
+       res.status(400).json({admin: false});
+   }
 });
 
 router.post('/addCategorie', function(req,res,next)

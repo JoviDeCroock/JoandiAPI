@@ -49,9 +49,15 @@
             {
                 postPromise: ['$route', 'profileService', function($route,profileService)
                 {
-                    return profileService.getUser($route.current.params.id);
+                    profileService.check($route.current.params.id)
+                    profileService.getUser($route.current.params.id);
+                    return
                 }]
             }
-        }).otherwise({redirectTo:'/auth'})
+        }).when('/admin', {
+            templateUrl: 'app/admin/adminPanel.html',
+            controller: 'adminController',
+            controllerAs : 'vm'
+        }).otherwise({redirectTo:'/shop'})
     };
 })();

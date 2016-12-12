@@ -35,6 +35,7 @@
 
        function logIn(user)
        {
+           console.log(user);
            return $http.post(url+'login', user).success(function(data)
            {
                auth.saveToken(data.token);

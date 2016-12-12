@@ -9,17 +9,44 @@
         .module('JoandiWebstore')
         .factory('profileService', profileService);
 
-    profileService.$inject = ['$http', 'authService','url'];
+    profileService.$inject = ['$http', 'authService','url', '$window'];
 
-    function profileService($http, authService,url)
+    function profileService($http, authService,url, $window)
     {
         var url = url.dev + "shop/";
         var token = authService.getToken();
         var profile =
         {
             getUser : getUser,
-            currentU : ""
+            updateAmount : updateAmount,
+            currentU : "",
+            check : check,
+            admin: false
         };
+
+        function updateAmount(id, amount)
+        {
+            var requestBody = {'amount': amount};
+            var uId = getUserId();
+            return $http.post(url + uId + "/updateAmount/"+id, requestBody, {
+                headers: {Authorization: 'Bearer ' + token}
+            }).success(function(data)
+            {
+                console.log(data);
+                return data;
+            });
+        }
+
+        function check(id)
+        {
+            return $http.get(url.dev + "/admin/" + id + "/isAdmin", {
+                headers: {Authorization: 'Bearer ' + token}
+            }).success(function(data)
+            {
+                profile.admin = data.admin;
+                return;
+            });
+        }
 
         function getUser(id)
         {
@@ -31,6 +58,12 @@
                 return;
             });
         };
+
+        function getUserId()
+        {
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+            return payload._id;
+        }
         return profile;
     };
 })();

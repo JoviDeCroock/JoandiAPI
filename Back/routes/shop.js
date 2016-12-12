@@ -92,6 +92,34 @@ router.get("/getProduct/:product",function(req,res,next)
     });
 });
 
+router.post("/:user/updateAmount/:product",function(req,res,next)
+{
+    var p = req.product;
+    req.user.populate('cart', function(err, cart)
+    {
+        if(err){return next(err);}
+        Cart.populate(cart.cart,{
+            path:'product',
+            model:'Product'
+        },function(err, carts)
+        {
+            carts.products.forEach(function(entry)
+            {
+                if(entry.product._id = p._id)
+                {
+                    entry.amount = req.body.amount;
+                }
+            });
+            var query = {_id: cart.cart._id};
+            Cart.update(query, cart.cart ,{upsert:true}, function(err, doc) {
+                if (err) return res.status(500).json({error: err});
+                return res.json(cart.cart);
+            });
+        });
+    });
+
+});
+
 router.get("/getUser/:user", function(req,res,next)
 {
     var u = req.user;
@@ -149,7 +177,7 @@ router.post("/:user/addToCart/:product",function(req, res, next)
 
 router.post("/:user/buy", function(req,res,next)
 {
-
+    /*NOT IMPLEMENTED*/
 });
 
 module.exports = router;

@@ -17,11 +17,18 @@
         vm.product = productService.selectedProduct;
         vm.isLoggedIn = authService.isLoggedIn();
         vm.currentUser = authService.currentUsername();
+        vm.user =  authService.currentUser();
         vm.logOut = logOut;
+        vm.profile = profile;
 
         function logOut () {
             authService.logOut();
             $location.path('/auth');
         };
+
+        function profile(id)
+        {
+            $location.path('/profile/' + id);
+        }
     };
 })();

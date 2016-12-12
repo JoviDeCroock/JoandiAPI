@@ -1,0 +1,48 @@
+<div class="container">
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+            <li><a href="/#/shop">Terug naar de winkel</a></li>
+        </ul>
+    </nav>
+    <form ng-submit="vm.addProduct()">
+        <div class="form-group">
+            naam:
+            <input type="text"
+                   class="form-control"
+                   placeholder="Naam"
+                   ng-model="vm.product.name"
+                   ng-required="true"/>
+        </div>
+        <div class="form-group">
+            Prijs:
+            <input type="text"
+                   class="form-control"
+                   placeholder="Prijs"
+                   ng-model="vm.product.price"
+                   ng-required="true"/>
+        </div>
+        <div ng-show="vm.selectThemeClicked">
+            <select ng-model = "vm.product.categorie"
+                    ng-change="vm.themeChooserChanged()">
+                <option ng-repeat="categorie in vm.categories">{{categorie.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div
+                    ngf-drop
+                    class="dropzone text-center"
+                    ng-model="vm.image.picture">
+                <p ng-hide="vm.image.picture">Sleep foto hier</p>
+                <img ngf-thumbnail="vm.image.picture"
+                        ng-show="vm.image.picture"
+                        alt="thumbnail"
+                        class="picture"/>
+            </div>
+            <input
+                    type="submit"
+                    value="Sla afbeelding op"
+                    class="btn btn-default"/>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Voeg product toe"/>
+    </form>
+</div>
