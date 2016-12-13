@@ -16,7 +16,7 @@ var User = mongoose.model('User');
 // Sanity test
 router.get('/', function(req,res,next)
 {
-    return res.json({message: 'API works like a charm'});
+    return res.status(200).json({message: 'API works like a charm'});
 });
 
 // Uiteindelijke API methods
@@ -25,14 +25,15 @@ router.post('/register', function(req,res,next)
    if(!req.body.password || !req.body.username){
       return res.status(400).json({message:'Vul alle velden in'});
    }
-   User.findOne({email: req.body.email}, function(err, data)
+   /*
+   User.findOne({username: req.body.username}, function(err, data)
    {
       if(data != null)
       {
          return res.status(400).json({message:'Het emailadres is al bezet.'});
       }
    });
-
+   */
    var user = new User();
    user.password = req.body.password;
    user.username = req.body.username;

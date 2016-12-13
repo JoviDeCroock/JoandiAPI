@@ -9,7 +9,7 @@ var UserSchema = new mongoose.Schema(
     {
         username: {type:String, unique: true},
         password: String,
-        admin: Boolean,
+        admin: {type:Boolean, default:false},
         cart: {type: mongoose.Schema.Types.ObjectId, ref:'Cart'},
         isHashed:
         {

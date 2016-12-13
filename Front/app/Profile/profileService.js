@@ -21,7 +21,7 @@
             updateAmount : updateAmount,
             currentU : "",
             check : check,
-            admin: false
+            admin: ""
         };
 
         function updateAmount(id, amount)
@@ -39,12 +39,13 @@
 
         function check(id)
         {
-            return $http.get(url.dev + "/admin/" + id + "/isAdmin", {
+            console.log(id);
+            return $http.get("http://localhost:3000/admin/" + id + "/isAdmin", {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
-                profile.admin = data.admin;
-                return;
+                profile.admin = data;
+                console.log(profile);
             });
         }
 
@@ -55,7 +56,7 @@
             }).success(function(data)
             {
                 profile.currentU = data;
-                return;
+                console.log(profile);
             });
         };
 

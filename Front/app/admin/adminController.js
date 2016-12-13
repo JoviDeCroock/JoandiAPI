@@ -16,8 +16,34 @@
         var vm = this;
         vm.isLoggedIn = authService.isLoggedIn();
         vm.currentUser = authService.currentUsername();
-        vm.logOut = logOut;
         vm.categories  = adminService.categories;
+        vm.add = addProduct;
+        vm.addCat = addCategorie;
+        vm.logOut = logOut;
+
+        function addProduct(image, product)
+        {
+            console.log(product);
+            adminService.addProduct(image, product).error(function(error)
+            {
+                console.log(error);
+            }).success(function()
+            {
+                alert("succesvol toegevoegd!");
+            });
+        }
+
+        function addCategorie(cat)
+        {
+            console.log(cat);
+            adminService.addCategorie(cat).error(function(error)
+            {
+                console.log(error);
+            }).success(function()
+            {
+                alert("succesvol toegevoegd!");
+            });
+        };
 
         function logOut () {
             authService.logOut();

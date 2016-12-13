@@ -14,14 +14,14 @@
     function profileController(profileService, authService, $location, $routeParams)
     {
         var vm = this;
-        vm.current = profileService.currentU;
-        vm.isLoggedIn = authService.isLoggedIn();
         vm.logOut = logOut;
-        vm.currentUser = authService.currentUsername();
         vm.updateAmount = updateAmount;
-        vm.admin = true;
         vm.adminPanel = admin;
-        console.log(vm.current);
+        vm.current = profileService.currentU;
+        vm.currentUser = authService.currentUsername();
+        vm.isLoggedIn = authService.isLoggedIn();
+        vm.admin = profileService.admin;
+        console.log(vm.admin);
 
         function updateAmount(id)
         {
@@ -32,8 +32,6 @@
             {
                 console.log("succes");
             });
-            console.log(vm.amount);
-            console.log(id);
         };
 
         function admin()

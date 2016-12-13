@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var catSchema = new mongoose.Schema(
     {
         name: String
-    }
-);
+    });
 
 mongoose.model("Categorie",catSchema);

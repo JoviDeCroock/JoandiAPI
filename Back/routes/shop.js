@@ -65,7 +65,7 @@ router.get("/getAllProducts", function(req, res, next)
         });
 });
 
-router.get("/getCart/:cart",function(req,res,next)
+router.get("/getCart/:cart", auth,function(req,res,next)
 {
    var c = req.cart;
     c.populate('products', function(err, cart)
@@ -92,7 +92,7 @@ router.get("/getProduct/:product",function(req,res,next)
     });
 });
 
-router.post("/:user/updateAmount/:product",function(req,res,next)
+router.post("/:user/updateAmount/:product", auth,function(req,res,next)
 {
     var p = req.product;
     req.user.populate('cart', function(err, cart)
@@ -146,7 +146,7 @@ router.get("/getUser/:user", function(req,res,next)
     });
 });
 
-router.post("/:user/addToCart/:product",function(req, res, next)
+router.post("/:user/addToCart/:product",auth,function(req, res, next)
 {
     var p = {};
     p.product = req.product;
@@ -175,7 +175,7 @@ router.post("/:user/addToCart/:product",function(req, res, next)
     });
 });
 
-router.post("/:user/buy", function(req,res,next)
+router.post("/:user/buy",auth, function(req,res,next)
 {
     /*NOT IMPLEMENTED*/
 });
