@@ -33,6 +33,7 @@
 
         function addToCart(product, user)
         {
+            console.log(token);
             return $http.post(url + user + '/addToCart/' + product, {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function (data)

@@ -6,7 +6,10 @@ var mongoose = require('mongoose');
 var express = require('express');
 var jwt = require('express-jwt');
 var router = express.Router();
+var path = require('path');
 var config = require('../config/config');
+
+var auth = jwt({secret:config.secret,userProperty:config.userProperty});
 
 // model import
 var User = mongoose.model('User');
@@ -14,7 +17,6 @@ var Cart = mongoose.model('Cart');
 var Product = mongoose.model('Product');
 var Categorie = mongoose.model('Categorie');
 
-var auth = jwt({secret:config.secret,userProperty:config.userProperty});
 
 // Params
 router.param('product', function(req,res,next,id)
@@ -146,7 +148,7 @@ router.get("/getUser/:user", function(req,res,next)
     });
 });
 
-router.post("/:user/addToCart/:product",auth,function(req, res, next)
+router.post("/:user/addToCart/:product",function(req, res, next)
 {
     var p = {};
     p.product = req.product;
@@ -156,23 +158,43 @@ router.post("/:user/addToCart/:product",auth,function(req, res, next)
     {
         if(err){return next(err);}
         if(!cart) {return next(new Error('ongeldige cart'));}
-        cart.products.push(p);
-        cart.populate('products', function(err,cart)
+        Cart.populate(cart, {
+            path:'products.categories',
+            model:'Categorie'
+        },function(err, products)
         {
-            cart.save(function(err){
-                if(err){return next(err);};
-            });
-            if(err) {return  next(err);}
-            Cart.populate(cart, {
-                path:'products.categories',
-                model:'Categorie'
-            },function(err, products)
+            Cart.populate(products,{
+                path:'products.product',
+                model:'Product'
+            }, function(err, af)
             {
-                if(err){return next(err);}
-                res.json(products);
+                af.products.forEach(function(entry)
+                {
+                    console.log(entry.product._id);
+                    if(entry.product._id === p.product._id)
+                    {
+                        return res.status(400).json({message:"Product zit al in het wagentje"});
+                    }
+                });
+                cart.products.push(p);
+                cart.populate('products', function(err,cart)
+                {
+                    cart.save(function(err){
+                        if(err){return next(err);};
+                    });
+                    if(err) {return  next(err);}
+                    Cart.populate(cart, {
+                        path:'products.categories',
+                        model:'Categorie'
+                    },function(err, products)
+                    {
+                        if(err){return next(err);}
+                        res.json(products);
+                    });
+                });
+            });
             });
         });
-    });
 });
 
 router.post("/:user/buy",auth, function(req,res,next)

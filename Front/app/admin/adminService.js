@@ -40,7 +40,7 @@
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
-                console.log(data);
+                admin.categories.push(data);
             });
         }
 
@@ -58,7 +58,7 @@
                 },
                 file: [image]
             }).success(function(data) {
-                console.log("yey");
+                //we did it
             });
         };
 
