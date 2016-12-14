@@ -22,7 +22,7 @@
         vm.isLoggedIn = authService.isLoggedIn();
         vm.admin = profileService.admin;
         vm.remove = remove;
-        console.log(vm.admin);
+        vm.amount = [];
 
         function remove(id)
         {
@@ -37,7 +37,17 @@
 
         function updateAmount(id)
         {
-            profileService.updateAmount(id, vm.amount).error(function(error)
+            var x = 0;
+            vm.amount.forEach(function(entry)
+            {
+               if(entry > x)
+               {
+                   console.log(entry);
+                   x = entry;
+               }
+            });
+            console.log(x);
+            profileService.updateAmount(id, x).error(function(error)
             {
                 console.log(error);
             }).success(function(msg)

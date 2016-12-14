@@ -24,7 +24,8 @@
             <p>Hoeveelheid: {{item.amount}} stuks</p>
             <form ng-submit="vm.updateAmount(item.product._id)">
                 Hoeveelheid:
-                <input type="text" name="Amount" ng-model="vm.amount"><br>
+                <input type="text" ng-model="vm.amount[$index]">
+                <p></p>
                 <p></p>
                 <input type="submit" class="btn btn-primary" value="Voeg hoeveelheid toe"/>
             </form>

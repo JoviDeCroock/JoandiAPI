@@ -36,10 +36,13 @@
 
         function addCategorie(cat)
         {
+            var x = admin.categories;
             return $http.post(url + "addCategorie", cat, {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
+                x.push(data);
+                angular.copy(x, admin.categories);
                 admin.categories.push(data);
             });
         }

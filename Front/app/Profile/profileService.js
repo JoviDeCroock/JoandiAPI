@@ -27,7 +27,6 @@
 
         function remove(id)
         {
-
             return $http.post(url + getUserId() + "/removeFromCart/"+id, {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
@@ -39,7 +38,6 @@
 
         function updateAmount(id, amount)
         {
-
             var requestBody = {'amount': amount};
             var uId = getUserId();
             return $http.post(url + uId + "/updateAmount/"+id, requestBody, {

@@ -101,14 +101,16 @@ router.post("/:user/updateAmount/:product", auth,function(req,res,next)
     {
         if(err){return next(err);}
         Cart.populate(cart.cart,{
-            path:'product',
+            path:'products.product',
             model:'Product'
         },function(err, carts)
         {
             carts.products.forEach(function(entry)
             {
-                if(entry.product._id = p._id)
+                console.log(entry.product.image);
+                if(entry.product.image === p.image)
                 {
+                    console.log("entered");
                     entry.amount = req.body.amount;
                 }
             });
