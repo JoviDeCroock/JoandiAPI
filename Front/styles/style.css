@@ -50,6 +50,11 @@ li:hover{
   font-size: 150%;
 }
 
+.product img{
+  width:350px;
+  height:300px;
+}
+
 .dropzone{
   width: 300px;
   height: 300px;

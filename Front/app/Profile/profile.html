@@ -15,7 +15,7 @@
     </nav>
     <div class="profile">
         <h1>Uw winkelkarretje</h1>
-        <div class="tile" ng-repeat="item in  vm.current.products">
+        <div class="tile" ng-repeat="item in  vm.current">
             <a href="#/product/{{item.product._id}}">
             <img src="http://localhost:3000/{{item.product.image}}" alt="{{item.product.name}}"/>
             </a>

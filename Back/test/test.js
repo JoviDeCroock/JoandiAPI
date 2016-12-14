@@ -34,13 +34,6 @@ describe('Models', function()
 
 describe('Routes', function()
 {
-    before(function(done)
-    {
-        request(app)
-            .post('/register')
-            .send({username:"xD@gmail.com", password: "wachtwoord"});
-    });
-
     describe('Response', function(){
         it("Should get basic response", function(done)
         {
@@ -49,6 +42,7 @@ describe('Routes', function()
                 .expect(200,done);
         });
     });
+
     describe('Post Register', function()
     {
         it("Register should work", function(done)

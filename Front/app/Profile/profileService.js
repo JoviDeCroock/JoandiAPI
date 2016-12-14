@@ -19,7 +19,7 @@
         {
             getUser : getUser,
             updateAmount : updateAmount,
-            currentU : "",
+            currentU : [],
             check : check,
             admin: "",
             remove: remove
@@ -27,33 +27,27 @@
 
         function remove(id)
         {
-            profile.currentU.products.forEach(function(entry)
-            {
-               if(entry.product._id = id)
-               {
-                   var x = profile.currentU.products.indexOf(entry);
-                   profile.currentU.products.splice(x,1);
-               }
-            });
+
             return $http.post(url + getUserId() + "/removeFromCart/"+id, {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
-                console.log(data);
-                return data;
+                angular.copy(data.products, profile.currentU);
+                console.log(profile.currentU);
             });
         }
 
         function updateAmount(id, amount)
         {
+
             var requestBody = {'amount': amount};
             var uId = getUserId();
             return $http.post(url + uId + "/updateAmount/"+id, requestBody, {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
-                console.log(data);
-                return data;
+                angular.copy(data.products, profile.currentU);
+                console.log(profile.currentU);
             });
         }
 
@@ -65,7 +59,6 @@
             }).success(function(data)
             {
                 profile.admin = data;
-                console.log(profile);
             });
         }
 
@@ -75,8 +68,8 @@
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
-                profile.currentU = data;
-                console.log(profile);
+                angular.copy(data.products, profile.currentU);
+                console.log(profile.currentU);
             });
         };
 

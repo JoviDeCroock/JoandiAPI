@@ -31,7 +31,7 @@
                 console.log(error);
             }).success(function(msg)
             {
-                $location.path("/profile/"+vm.current._id);
+                vm.current = profileService.currentU;
             });
         }
 
@@ -42,7 +42,7 @@
                 console.log(error);
             }).success(function(msg)
             {
-                $location.path("/profile/"+vm.current._id);
+                vm.current = profileService.currentU;
             });
         };
 

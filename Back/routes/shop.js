@@ -222,49 +222,6 @@ router.post("/:user/addToCart/:product",function(req, res, next)
         });
 
     });
-
-    /*var p = {};
-    p.product = req.product;
-    p.amount = 1;
-    var count =0;
-    var q = Cart.findById(req.user.cart);
-    q.exec(function(err, cart)
-    {
-        if(err){return next(err);}
-        if(!cart) {return next(new Error('ongeldige cart'));}
-        cart.products.push(p);
-        Cart.populate(cart, {
-            path:'products.categories',
-            model:'Categorie'
-        },function(err, products)
-        {
-            Cart.populate(products,{
-                path:'products.product',
-                model:'Product'
-            }, function(err, af)
-            {
-                af.products.forEach(function(entry)
-                {
-                    if(entry.product._id === p.product._id)
-                    {
-                        count++;
-                        if(count>1)
-                        {
-                            var z = af.products.indexOf(entry);
-                            af.products.splice(z,1);
-                            return;
-                        }
-                    }
-                });
-                var query = {_id: cart._id};
-                Cart.update(query, af, {upsert:true}, function(err,doc)
-                {
-                    if(err){return console.log(err);}
-                    return res.json(af);
-                });
-            });
-        });
-    });*/
 });
 
 router.post("/:user/buy",auth, function(req,res,next)
