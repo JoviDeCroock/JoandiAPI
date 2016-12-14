@@ -21,8 +21,28 @@
             updateAmount : updateAmount,
             currentU : "",
             check : check,
-            admin: ""
+            admin: "",
+            remove: remove
         };
+
+        function remove(id)
+        {
+            profile.currentU.products.forEach(function(entry)
+            {
+               if(entry.product._id = id)
+               {
+                   var x = profile.currentU.products.indexOf(entry);
+                   profile.currentU.products.splice(x,1);
+               }
+            });
+            return $http.post(url + getUserId() + "/removeFromCart/"+id, {
+                headers: {Authorization: 'Bearer ' + token}
+            }).success(function(data)
+            {
+                console.log(data);
+                return data;
+            });
+        }
 
         function updateAmount(id, amount)
         {

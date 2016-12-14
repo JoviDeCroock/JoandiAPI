@@ -65,7 +65,7 @@ describe('Routes', function()
         {
             request(app)
                 .post('/register')
-                .send({username:"xD@gmail.com", password: "wachtwoord"})
+                .send({username:"Jovi@gmail.com", password: "wachtwoord"})
                 .expect(500,done);
         });
     });

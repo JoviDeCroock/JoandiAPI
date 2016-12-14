@@ -148,16 +148,91 @@ router.get("/getUser/:user", function(req,res,next)
     });
 });
 
-router.post("/:user/addToCart/:product",function(req, res, next)
+router.post("/:user/removeFromCart/:product", function(req,res,next)
 {
-    var p = {};
-    p.product = req.product;
-    p.amount = 1;
     var q = Cart.findById(req.user.cart);
     q.exec(function(err, cart)
     {
         if(err){return next(err);}
         if(!cart) {return next(new Error('ongeldige cart'));}
+        Cart.populate(cart, {
+            path:'products.categories',
+            model:'Categorie'
+        },function(err, products) {
+            Cart.populate(products, {
+                path: 'products.product',
+                model: 'Product'
+            }, function (err, af) {
+                af.products.forEach(function (entry) {
+                    if(entry.product.image === req.product.image)
+                    {
+                        var z = af.products.indexOf(entry);
+                        af.products.splice(z,1);
+                        var query = {_id: cart._id};
+                        console.log(af);
+                        Cart.update(query, af, {upsert:true}, function(err,doc)
+                        {
+                            if(err){return console.log(err);}
+                            return res.json({message:'succes'});
+                        });
+                    }
+                });
+            });
+        });
+    });
+});
+
+router.post("/:user/addToCart/:product",function(req, res, next)
+{
+    var q = Cart.findById(req.user.cart);
+    q.exec(function(err, cart)
+    {
+        if(err){return next(err);}
+        if(!cart) {return next(new Error('ongeldige cart'));}
+        Cart.populate(cart, {
+            path:'products.categories',
+            model:'Categorie'
+        },function(err, products) {
+            Cart.populate(products, {
+                path: 'products.product',
+                model: 'Product'
+            }, function (err, af) {
+                var there = false;
+                af.products.forEach(function (entry) {
+                    if(entry.product.image === req.product.image)
+                    {
+                        there = true;
+                    }
+                    console.log(there);
+                });
+                if(there)
+                {
+                    return res.status(400).json({message:"fail"});
+                }else{
+                    af.products.push({product: req.product, amount: 1});
+                    var query = {_id: af._id};
+                    Cart.update(query, af, {upsert:true}, function(err,doc) {
+                        if (err) {
+                            return console.log(err);
+                        }
+                        return res.json(cart);
+                    });
+                }
+            });
+        });
+
+    });
+
+    /*var p = {};
+    p.product = req.product;
+    p.amount = 1;
+    var count =0;
+    var q = Cart.findById(req.user.cart);
+    q.exec(function(err, cart)
+    {
+        if(err){return next(err);}
+        if(!cart) {return next(new Error('ongeldige cart'));}
+        cart.products.push(p);
         Cart.populate(cart, {
             path:'products.categories',
             model:'Categorie'
@@ -170,31 +245,26 @@ router.post("/:user/addToCart/:product",function(req, res, next)
             {
                 af.products.forEach(function(entry)
                 {
-                    console.log(entry.product._id);
                     if(entry.product._id === p.product._id)
                     {
-                        return res.status(400).json({message:"Product zit al in het wagentje"});
+                        count++;
+                        if(count>1)
+                        {
+                            var z = af.products.indexOf(entry);
+                            af.products.splice(z,1);
+                            return;
+                        }
                     }
                 });
-                cart.products.push(p);
-                cart.populate('products', function(err,cart)
+                var query = {_id: cart._id};
+                Cart.update(query, af, {upsert:true}, function(err,doc)
                 {
-                    cart.save(function(err){
-                        if(err){return next(err);};
-                    });
-                    if(err) {return  next(err);}
-                    Cart.populate(cart, {
-                        path:'products.categories',
-                        model:'Categorie'
-                    },function(err, products)
-                    {
-                        if(err){return next(err);}
-                        res.json(products);
-                    });
+                    if(err){return console.log(err);}
+                    return res.json(af);
                 });
             });
-            });
         });
+    });*/
 });
 
 router.post("/:user/buy",auth, function(req,res,next)

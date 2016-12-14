@@ -21,7 +21,19 @@
         vm.currentUser = authService.currentUsername();
         vm.isLoggedIn = authService.isLoggedIn();
         vm.admin = profileService.admin;
+        vm.remove = remove;
         console.log(vm.admin);
+
+        function remove(id)
+        {
+            profileService.remove(id).error(function(error)
+            {
+                console.log(error);
+            }).success(function(msg)
+            {
+                $location.path("/profile/"+vm.current._id);
+            });
+        }
 
         function updateAmount(id)
         {
@@ -30,7 +42,7 @@
                 console.log(error);
             }).success(function(msg)
             {
-                console.log("succes");
+                $location.path("/profile/"+vm.current._id);
             });
         };
 
