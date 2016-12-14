@@ -175,7 +175,7 @@ router.post("/:user/removeFromCart/:product", function(req,res,next)
                         Cart.update(query, af, {upsert:true}, function(err,doc)
                         {
                             if(err){return console.log(err);}
-                            return res.json({message:'succes'});
+                            return res.json(af);
                         });
                     }
                 });
