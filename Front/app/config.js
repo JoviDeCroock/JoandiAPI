@@ -7,7 +7,7 @@
     angular
         .module('JoandiWebstore')
         .constant('url',{
-            dev:'http://188.166.173.147/:3000/',
+            dev:'http://188.166.173.147:3000/',
             release: 'notdefined'
         });
 

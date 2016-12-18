@@ -52,7 +52,7 @@
         function check(id)
         {
             console.log(id);
-            return $http.get("http://localhost:3000/admin/" + id + "/isAdmin", {
+            return $http.get(url.dev + id + "/isAdmin", {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
