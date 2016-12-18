@@ -7,7 +7,7 @@
     angular
         .module('JoandiWebstore')
         .constant('url',{
-            dev:'http://localhost:3000/',
+            dev:'http://127.0.0.1:3000/',
             release: 'notdefined'
         });
 
