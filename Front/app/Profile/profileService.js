@@ -51,12 +51,13 @@
 
         function check(id)
         {
-            console.log(id);
+            console.log("http://188.166.173.147:3000/admin/" + id + "/isAdmin");
             return $http.get("http://188.166.173.147:3000/admin/" + id + "/isAdmin", {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
-                profile.admin = data;
+                profile.admin = data.admin;
+                console.log(profile.admin);
             });
         }
 
