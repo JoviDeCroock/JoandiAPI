@@ -52,7 +52,7 @@
         function check(id)
         {
             console.log(id);
-            return $http.get("http://188.166.173.147:3000/" + id + "/isAdmin", {
+            return $http.get("http://188.166.173.147:3000/admin/" + id + "/isAdmin", {
                 headers: {Authorization: 'Bearer ' + token}
             }).success(function(data)
             {
