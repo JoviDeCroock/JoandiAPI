@@ -61,7 +61,8 @@ router.get('/users',function(req,res,next)
 
 router.post('/login',function(req,res,next)
 {
-   console.log(req.body);
+   console.log(req.body.username);
+    console.log(req.body.password);
    if(!req.body.username || !req.body.password){
       return res.status(400).json({message:'Vul alle velden in'});
    }
