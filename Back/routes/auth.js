@@ -25,15 +25,7 @@ router.post('/register', function(req,res,next)
    if(!req.body.password || !req.body.username){
       return res.status(400).json({message:'Vul alle velden in'});
    }
-   /*
-   User.findOne({username: req.body.username}, function(err, data)
-   {
-      if(data != null)
-      {
-         return res.status(400).json({message:'Het emailadres is al bezet.'});
-      }
-   });
-   */
+
    var user = new User();
    user.password = req.body.password;
    user.username = req.body.username;
@@ -46,7 +38,7 @@ router.post('/register', function(req,res,next)
    user.cart = cart;
    user.save(function(err){
       if(err){return next(err);}
-      return res.json({token: tokenGen(user)});
+      return res.json({token: tokenGen(user), id: user._id});
    });
 });
 
@@ -70,7 +62,7 @@ router.post('/login',function(req,res,next)
    passport.authenticate('local',function(err,user,info){
       if(err){return next(err);}
       if(user){
-         return res.json({token: tokenGen(user)});
+         return res.json({token: tokenGen(user), id: user._id});
       }
       else{
          return res.status(401).json(info);
